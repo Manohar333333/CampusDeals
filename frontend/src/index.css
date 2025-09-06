@@ -1,0 +1,302 @@
+/* index.css */
+
+/* Header */
+.header {
+  background: linear-gradient(90deg, #4facfe, #00f2fe);
+  padding: 1rem 2rem;
+  color: white;
+  text-align: center;
+}
+
+.logo {
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+/* Navbar */
+.navbar {
+  background: #f8f8f8;
+  padding: 1rem;
+}
+
+.navbar ul {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  gap: 1.5rem;
+}
+
+.navbar a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+}
+
+.navbar a:hover {
+  color: #4facfe;
+  border-bottom: 2px solid #4facfe;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 200px;
+  background: #f1f1f1;
+  padding: 1rem;
+  min-height: 100vh;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar li {
+  margin: 1rem 0;
+}
+
+.sidebar a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+}
+
+.sidebar a:hover {
+  color: #4facfe;
+}
+
+/* Footer */
+.footer {
+  background: #222;
+  color: #aaa;
+  padding: 1rem;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+/* Buttons */
+.btn {
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn.primary {
+  background: #4facfe;
+  color: white;
+}
+
+.btn.primary:hover {
+  background: #00c6ff;
+  transform: translateY(-2px);
+}
+
+.btn.secondary {
+  background: #f1f1f1;
+  color: #333;
+}
+
+.btn.secondary:hover {
+  background: #ddd;
+  transform: translateY(-2px);
+}
+
+.btn.danger {
+  background: #ff4d4f;
+  color: white;
+}
+
+.btn.danger:hover {
+  background: #e84142;
+  transform: scale(1.05);
+}
+
+/* Home Page Styles */
+.home-container {
+  font-family: Arial, sans-serif;
+  padding: 0;
+  margin: 0;
+}
+
+.hero {
+  text-align: center;
+  padding: 3rem 1rem;
+  background: #f9f9f9;
+}
+
+.hero h2 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.hero-buttons {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.features {
+  padding: 2rem;
+  text-align: center;
+}
+
+.features ul {
+  list-style: none;
+  padding: 0;
+}
+
+.features li {
+  margin: 0.5rem 0;
+}
+
+.footer {
+  text-align: center;
+  padding: 1rem;
+  background: #222;
+  color: white;
+  margin-top: 2rem;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #222;
+  color: white;
+  padding: 10px 20px;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.nav-links a:hover {
+  color: #ff9800;
+}
+
+.page {
+  padding: 30px;
+  text-align: center;
+}
+
+/* --- Navbar --- */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #2c3e50;
+  padding: 0.8rem 2rem;
+  color: white;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%; /* circle look */
+  object-fit: cover;
+}
+
+.logo-text {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #ecf0f1;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: #27ae60;
+}
+
+
+/* --- SIDEBAR --- */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 250px;
+  height: 100%;
+  background: #333;
+  color: white;
+  padding: 20px;
+  transform: translateX(-100%);  /* Hidden by default */
+  transition: transform 0.3s ease;
+  z-index: 1000;
+  display: none; /* fully hidden initially */
+}
+
+.sidebar.open {
+  display: block;                /* show when open */
+  transform: translateX(0);      /* slide in */
+}
+
+.sidebar .close-btn {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: white;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar ul li {
+  margin: 15px 0;
+}
+
+.sidebar ul li a {
+  color: white;
+  text-decoration: none;
+  font-size: 1.2rem;
+  transition: 0.3s;
+}
+
+.sidebar ul li a:hover {
+  color: #ff9800;
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 768px) {
+  .nav-links.desktop {
+    display: none; /* Hide desktop menu */
+  }
+  .menu-btn {
+    display: block; /* Show menu button */
+  }
+}
