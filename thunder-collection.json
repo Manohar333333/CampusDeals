@@ -1,0 +1,240 @@
+{
+  "client": "Thunder Client",
+  "collectionName": "CampusDeals JWT API",
+  "dateExported": "2025-09-09T13:45:00.000Z",
+  "version": "1.1",
+  "folders": [
+    {
+      "_id": "auth-folder",
+      "name": "Authentication",
+      "containerId": "",
+      "created": "2025-09-09T13:45:00.000Z",
+      "sortNum": 10000
+    },
+    {
+      "_id": "products-folder",
+      "name": "Products",
+      "containerId": "",
+      "created": "2025-09-09T13:45:00.000Z",
+      "sortNum": 20000
+    },
+    {
+      "_id": "cart-folder",
+      "name": "Cart",
+      "containerId": "",
+      "created": "2025-09-09T13:45:00.000Z",
+      "sortNum": 30000
+    },
+    {
+      "_id": "orders-folder",
+      "name": "Orders",
+      "containerId": "",
+      "created": "2025-09-09T13:45:00.000Z",
+      "sortNum": 40000
+    }
+  ],
+  "requests": [
+    {
+      "_id": "register-request",
+      "colId": "campusdeals-collection",
+      "containerId": "auth-folder",
+      "name": "Register User",
+      "url": "http://localhost:5000/api/auth/register",
+      "method": "POST",
+      "sortNum": 10000,
+      "created": "2025-09-09T13:45:00.000Z",
+      "modified": "2025-09-09T13:45:00.000Z",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"user_name\": \"John Doe\",\n  \"user_email\": \"john@example.com\",\n  \"user_password\": \"password123\",\n  \"role\": \"buyer\",\n  \"user_phone\": \"1234567890\",\n  \"user_studyyear\": \"3rd Year\",\n  \"user_branch\": \"Computer Science\",\n  \"user_section\": \"A\",\n  \"user_residency\": \"Hostel\"\n}",
+        "form": []
+      }
+    },
+    {
+      "_id": "login-request",
+      "colId": "campusdeals-collection",
+      "containerId": "auth-folder",
+      "name": "Login User",
+      "url": "http://localhost:5000/api/auth/login",
+      "method": "POST",
+      "sortNum": 20000,
+      "created": "2025-09-09T13:45:00.000Z",
+      "modified": "2025-09-09T13:45:00.000Z",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"user_email\": \"john@example.com\",\n  \"user_password\": \"password123\"\n}",
+        "form": []
+      }
+    },
+    {
+      "_id": "profile-request",
+      "colId": "campusdeals-collection",
+      "containerId": "auth-folder",
+      "name": "Get Profile",
+      "url": "http://localhost:5000/api/auth/profile",
+      "method": "GET",
+      "sortNum": 30000,
+      "created": "2025-09-09T13:45:00.000Z",
+      "modified": "2025-09-09T13:45:00.000Z",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer YOUR_TOKEN_HERE"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ]
+    },
+    {
+      "_id": "get-products-request",
+      "colId": "campusdeals-collection",
+      "containerId": "products-folder",
+      "name": "Get Products",
+      "url": "http://localhost:5000/api/products",
+      "method": "GET",
+      "sortNum": 10000,
+      "created": "2025-09-09T13:45:00.000Z",
+      "modified": "2025-09-09T13:45:00.000Z",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ]
+    },
+    {
+      "_id": "add-product-request",
+      "colId": "campusdeals-collection",
+      "containerId": "products-folder",
+      "name": "Add Product (Admin/Seller)",
+      "url": "http://localhost:5000/api/products",
+      "method": "POST",
+      "sortNum": 20000,
+      "created": "2025-09-09T13:45:00.000Z",
+      "modified": "2025-09-09T13:45:00.000Z",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer YOUR_TOKEN_HERE"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"product_name\": \"calculator\",\n  \"product_variant\": \"ES-Plus\",\n  \"product_code\": \"CALC001\",\n  \"product_price\": 25.99,\n  \"product_images\": \"calculator_image.jpg\",\n  \"quantity\": 10\n}",
+        "form": []
+      }
+    },
+    {
+      "_id": "add-to-cart-request",
+      "colId": "campusdeals-collection",
+      "containerId": "cart-folder",
+      "name": "Add to Cart",
+      "url": "http://localhost:5000/api/cart",
+      "method": "POST",
+      "sortNum": 10000,
+      "created": "2025-09-09T13:45:00.000Z",
+      "modified": "2025-09-09T13:45:00.000Z",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer YOUR_TOKEN_HERE"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"product_id\": 1,\n  \"quantity\": 2\n}",
+        "form": []
+      }
+    },
+    {
+      "_id": "get-cart-request",
+      "colId": "campusdeals-collection",
+      "containerId": "cart-folder",
+      "name": "Get Cart",
+      "url": "http://localhost:5000/api/cart",
+      "method": "GET",
+      "sortNum": 20000,
+      "created": "2025-09-09T13:45:00.000Z",
+      "modified": "2025-09-09T13:45:00.000Z",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer YOUR_TOKEN_HERE"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ]
+    },
+    {
+      "_id": "create-order-request",
+      "colId": "campusdeals-collection",
+      "containerId": "orders-folder",
+      "name": "Create Order",
+      "url": "http://localhost:5000/api/orders",
+      "method": "POST",
+      "sortNum": 10000,
+      "created": "2025-09-09T13:45:00.000Z",
+      "modified": "2025-09-09T13:45:00.000Z",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer YOUR_TOKEN_HERE"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"serial_no\": \"ORD001\",\n  \"total_amount\": 51.98,\n  \"payment_method\": \"credit_card\",\n  \"status\": \"pending\"\n}",
+        "form": []
+      }
+    },
+    {
+      "_id": "get-orders-request",
+      "colId": "campusdeals-collection",
+      "containerId": "orders-folder",
+      "name": "Get My Orders",
+      "url": "http://localhost:5000/api/orders",
+      "method": "GET",
+      "sortNum": 20000,
+      "created": "2025-09-09T13:45:00.000Z",
+      "modified": "2025-09-09T13:45:00.000Z",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer YOUR_TOKEN_HERE"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ]
+    }
+  ]
+}
