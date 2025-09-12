@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import ProductCard from "../components/ProductCard";
+import BuyForm from "./BuyForm"; // ✅ Import modal form
 import "./Buy.css";
 
 // ✅ Import images
@@ -18,7 +19,31 @@ const Buy = () => {
     { id: 5, name: "Chemical Lab Coat", price: 250, stock: 3, image: chemCoatImg }
   ];
 
+  const [cart, setCart] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [showForm, setShowForm] = useState(false);
+
+  const handleAddToCart = (product) => {
+    setCart((prev) => {
+      const existing = prev.find((item) => item.id === product.id);
+      if (existing) {
+        return prev.map((item) =>
+          item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
+        );
+      }
+      return [...prev, { ...product, quantity: 1 }];
+    });
+  };
+
+  const handleProceed = () => {
+    if (cart.length > 0) {
+      setShowForm(true);
+    }
+  };
+
+  const handleCloseForm = () => {
+    setShowForm(false);
+  };
 
   const filteredProducts = products.filter((p) =>
     p.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -42,12 +67,26 @@ const Buy = () => {
       <div className="products-grid">
         {filteredProducts.length > 0 ? (
           filteredProducts.map((item) => (
-            <ProductCard key={item.id} product={item} />
+            <ProductCard key={item.id} product={item} onAddToCart={handleAddToCart} />
           ))
         ) : (
           <p className="no-results">No products found.</p>
         )}
       </div>
+
+      {/* ✅ Buy Button */}
+      <div className="buy-button-container">
+        <button
+          className="buy-button"
+          onClick={handleProceed}
+          disabled={cart.length === 0}
+        >
+          Proceed to Buy
+        </button>
+      </div>
+
+      {/* 📝 Buyer Form as Modal */}
+      {showForm && <BuyForm cart={cart} onClose={handleCloseForm} />}
     </div>
   );
 };

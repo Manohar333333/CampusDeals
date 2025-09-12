@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import "./ProductCard.css";
 
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product, onAddToCart }) => {
   const [showModal, setShowModal] = useState(false);
-  const [selectedOption, setSelectedOption] = useState(null);
 
   // Drafter options
   const drafterOptions = [
@@ -16,14 +15,18 @@ const ProductCard = ({ product }) => {
     if (product.name === "Engineering Drafter") {
       setShowModal(true);
     } else {
-      alert(`${product.name} added to cart!`);
+      onAddToCart(product); // ✅ send product to Buy.jsx
     }
   };
 
   const handleOptionSelect = (option) => {
-    setSelectedOption(option);
+    const selectedDrafter = {
+      ...product,
+      name: `${option.type} Drafter`,
+      price: option.price,
+    };
+    onAddToCart(selectedDrafter); // ✅ send selected option
     setShowModal(false);
-    alert(`${option.type} Drafter added to cart at ₹${option.price}`);
   };
 
   return (
