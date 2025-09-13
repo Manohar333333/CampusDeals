@@ -1,0 +1,347 @@
+{
+  "client": "Thunder Client",
+  "collectionName": "Enhanced CampusDeals JWT",
+  "dateExported": "2025-09-12T13:45:00.000Z",
+  "version": "1.2",
+  "folders": [
+    {
+      "_id": "signup-tests",
+      "name": "1. Signup Tests",
+      "containerId": "",
+      "created": "2025-09-12T13:45:00.000Z",
+      "sortNum": 10000
+    },
+    {
+      "_id": "login-tests",
+      "name": "2. Login Tests",
+      "containerId": "",
+      "created": "2025-09-12T13:45:00.000Z",
+      "sortNum": 20000
+    },
+    {
+      "_id": "validation-tests",
+      "name": "3. Input Validation Tests",
+      "containerId": "",
+      "created": "2025-09-12T13:45:00.000Z",
+      "sortNum": 30000
+    },
+    {
+      "_id": "buy-operations",
+      "name": "4. Buy Operations (Authenticated)",
+      "containerId": "",
+      "created": "2025-09-12T13:45:00.000Z",
+      "sortNum": 40000
+    },
+    {
+      "_id": "sell-operations",
+      "name": "5. Sell Operations (Role-Based)",
+      "containerId": "",
+      "created": "2025-09-12T13:45:00.000Z",
+      "sortNum": 50000
+    },
+    {
+      "_id": "protected-routes",
+      "name": "6. Protected Routes",
+      "containerId": "",
+      "created": "2025-09-12T13:45:00.000Z",
+      "sortNum": 60000
+    }
+  ],
+  "requests": [
+    {
+      "_id": "signup-buyer",
+      "colId": "enhanced-campusdeals",
+      "containerId": "signup-tests",
+      "name": "Signup - New Buyer",
+      "url": "http://localhost:5000/api/auth/signup",
+      "method": "POST",
+      "sortNum": 10000,
+      "headers": [{"name": "Content-Type", "value": "application/json"}],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"user_name\": \"Alice Johnson\",\n  \"user_email\": \"alice@campus.com\",\n  \"user_password\": \"secure123\",\n  \"role\": \"buyer\",\n  \"user_phone\": \"9876543210\",\n  \"user_studyyear\": \"2nd Year\",\n  \"user_branch\": \"Electronics\",\n  \"user_section\": \"B\",\n  \"user_residency\": \"Day Scholar\"\n}"
+      }
+    },
+    {
+      "_id": "signup-seller",
+      "colId": "enhanced-campusdeals",
+      "containerId": "signup-tests",
+      "name": "Signup - New Seller",
+      "url": "http://localhost:5000/api/auth/signup",
+      "method": "POST",
+      "sortNum": 20000,
+      "headers": [{"name": "Content-Type", "value": "application/json"}],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"user_name\": \"Bob Seller\",\n  \"user_email\": \"bob@campus.com\",\n  \"user_password\": \"seller123\",\n  \"role\": \"seller\",\n  \"user_phone\": \"9876543211\",\n  \"user_studyyear\": \"4th Year\",\n  \"user_branch\": \"Mechanical\",\n  \"user_section\": \"A\",\n  \"user_residency\": \"Hostel\"\n}"
+      }
+    },
+    {
+      "_id": "signup-duplicate",
+      "colId": "enhanced-campusdeals",
+      "containerId": "signup-tests",
+      "name": "Signup - Duplicate Email (Should Fail)",
+      "url": "http://localhost:5000/api/auth/signup",
+      "method": "POST",
+      "sortNum": 30000,
+      "headers": [{"name": "Content-Type", "value": "application/json"}],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"user_name\": \"Another User\",\n  \"user_email\": \"alice@campus.com\",\n  \"user_password\": \"password123\"\n}"
+      }
+    },
+    {
+      "_id": "login-valid",
+      "colId": "enhanced-campusdeals",
+      "containerId": "login-tests",
+      "name": "Login - Valid Credentials",
+      "url": "http://localhost:5000/api/auth/login",
+      "method": "POST",
+      "sortNum": 10000,
+      "headers": [{"name": "Content-Type", "value": "application/json"}],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"user_email\": \"alice@campus.com\",\n  \"user_password\": \"secure123\"\n}"
+      }
+    },
+    {
+      "_id": "login-nonexistent",
+      "colId": "enhanced-campusdeals",
+      "containerId": "login-tests",
+      "name": "Login - Non-existent User (Should Fail)",
+      "url": "http://localhost:5000/api/auth/login",
+      "method": "POST",
+      "sortNum": 20000,
+      "headers": [{"name": "Content-Type", "value": "application/json"}],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"user_email\": \"nonexistent@campus.com\",\n  \"user_password\": \"anypassword\"\n}"
+      }
+    },
+    {
+      "_id": "login-wrong-password",
+      "colId": "enhanced-campusdeals",
+      "containerId": "login-tests",
+      "name": "Login - Wrong Password (Should Fail)",
+      "url": "http://localhost:5000/api/auth/login",
+      "method": "POST",
+      "sortNum": 30000,
+      "headers": [{"name": "Content-Type", "value": "application/json"}],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"user_email\": \"alice@campus.com\",\n  \"user_password\": \"wrongpassword\"\n}"
+      }
+    },
+    {
+      "_id": "signup-invalid-email",
+      "colId": "enhanced-campusdeals",
+      "containerId": "validation-tests",
+      "name": "Signup - Invalid Email (Should Fail)",
+      "url": "http://localhost:5000/api/auth/signup",
+      "method": "POST",
+      "sortNum": 10000,
+      "headers": [{"name": "Content-Type", "value": "application/json"}],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"user_name\": \"John Doe\",\n  \"user_email\": \"invalid-email\",\n  \"user_password\": \"secure123\"\n}"
+      }
+    },
+    {
+      "_id": "signup-weak-password",
+      "colId": "enhanced-campusdeals",
+      "containerId": "validation-tests",
+      "name": "Signup - Weak Password (Should Fail)",
+      "url": "http://localhost:5000/api/auth/signup",
+      "method": "POST",
+      "sortNum": 20000,
+      "headers": [{"name": "Content-Type", "value": "application/json"}],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"user_name\": \"John Doe\",\n  \"user_email\": \"john@campus.com\",\n  \"user_password\": \"123\"\n}"
+      }
+    },
+    {
+      "_id": "signup-missing-fields",
+      "colId": "enhanced-campusdeals",
+      "containerId": "validation-tests",
+      "name": "Signup - Missing Fields (Should Fail)",
+      "url": "http://localhost:5000/api/auth/signup",
+      "method": "POST",
+      "sortNum": 30000,
+      "headers": [{"name": "Content-Type", "value": "application/json"}],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"user_email\": \"john@campus.com\"\n}"
+      }
+    },
+    {
+      "_id": "cart-no-token",
+      "colId": "enhanced-campusdeals",
+      "containerId": "buy-operations",
+      "name": "Add to Cart - No Token (Should Fail)",
+      "url": "http://localhost:5000/api/cart",
+      "method": "POST",
+      "sortNum": 10000,
+      "headers": [{"name": "Content-Type", "value": "application/json"}],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"product_id\": 1,\n  \"quantity\": 2\n}"
+      }
+    },
+    {
+      "_id": "cart-with-token",
+      "colId": "enhanced-campusdeals",
+      "containerId": "buy-operations",
+      "name": "Add to Cart - With Token",
+      "url": "http://localhost:5000/api/cart",
+      "method": "POST",
+      "sortNum": 20000,
+      "headers": [
+        {"name": "Authorization", "value": "Bearer YOUR_BUYER_TOKEN_HERE"},
+        {"name": "Content-Type", "value": "application/json"}
+      ],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"product_id\": 1,\n  \"quantity\": 2\n}"
+      }
+    },
+    {
+      "_id": "cart-missing-fields",
+      "colId": "enhanced-campusdeals",
+      "containerId": "buy-operations",
+      "name": "Add to Cart - Missing Fields (Should Fail)",
+      "url": "http://localhost:5000/api/cart",
+      "method": "POST",
+      "sortNum": 30000,
+      "headers": [
+        {"name": "Authorization", "value": "Bearer YOUR_BUYER_TOKEN_HERE"},
+        {"name": "Content-Type", "value": "application/json"}
+      ],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"quantity\": 2\n}"
+      }
+    },
+    {
+      "_id": "get-cart",
+      "colId": "enhanced-campusdeals",
+      "containerId": "buy-operations",
+      "name": "Get Cart",
+      "url": "http://localhost:5000/api/cart",
+      "method": "GET",
+      "sortNum": 40000,
+      "headers": [
+        {"name": "Authorization", "value": "Bearer YOUR_BUYER_TOKEN_HERE"},
+        {"name": "Content-Type", "value": "application/json"}
+      ]
+    },
+    {
+      "_id": "add-product-buyer",
+      "colId": "enhanced-campusdeals",
+      "containerId": "sell-operations",
+      "name": "Add Product - As Buyer (Should Fail)",
+      "url": "http://localhost:5000/api/products",
+      "method": "POST",
+      "sortNum": 10000,
+      "headers": [
+        {"name": "Authorization", "value": "Bearer YOUR_BUYER_TOKEN_HERE"},
+        {"name": "Content-Type", "value": "application/json"}
+      ],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"product_name\": \"calculator\",\n  \"product_variant\": \"ES-Plus\",\n  \"product_price\": 25.99,\n  \"quantity\": 10\n}"
+      }
+    },
+    {
+      "_id": "add-product-seller",
+      "colId": "enhanced-campusdeals",
+      "containerId": "sell-operations",
+      "name": "Add Product - As Seller",
+      "url": "http://localhost:5000/api/products",
+      "method": "POST",
+      "sortNum": 20000,
+      "headers": [
+        {"name": "Authorization", "value": "Bearer YOUR_SELLER_TOKEN_HERE"},
+        {"name": "Content-Type", "value": "application/json"}
+      ],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"product_name\": \"calculator\",\n  \"product_variant\": \"ES-Plus\",\n  \"product_code\": \"CALC001\",\n  \"product_price\": 25.99,\n  \"product_images\": \"calc.jpg\",\n  \"quantity\": 10\n}"
+      }
+    },
+    {
+      "_id": "get-products",
+      "colId": "enhanced-campusdeals",
+      "containerId": "sell-operations",
+      "name": "Get Products (Public)",
+      "url": "http://localhost:5000/api/products",
+      "method": "GET",
+      "sortNum": 30000,
+      "headers": [{"name": "Content-Type", "value": "application/json"}]
+    },
+    {
+      "_id": "get-profile",
+      "colId": "enhanced-campusdeals",
+      "containerId": "protected-routes",
+      "name": "Get User Profile",
+      "url": "http://localhost:5000/api/auth/profile",
+      "method": "GET",
+      "sortNum": 10000,
+      "headers": [
+        {"name": "Authorization", "value": "Bearer YOUR_TOKEN_HERE"},
+        {"name": "Content-Type", "value": "application/json"}
+      ]
+    },
+    {
+      "_id": "validate-buy",
+      "colId": "enhanced-campusdeals",
+      "containerId": "protected-routes",
+      "name": "Validate Buy Permission",
+      "url": "http://localhost:5000/api/auth/validate-transaction",
+      "method": "POST",
+      "sortNum": 20000,
+      "headers": [
+        {"name": "Authorization", "value": "Bearer YOUR_BUYER_TOKEN_HERE"},
+        {"name": "Content-Type", "value": "application/json"}
+      ],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"operation\": \"buy\"\n}"
+      }
+    },
+    {
+      "_id": "validate-sell-buyer",
+      "colId": "enhanced-campusdeals",
+      "containerId": "protected-routes",
+      "name": "Validate Sell Permission - Buyer (Should Fail)",
+      "url": "http://localhost:5000/api/auth/validate-transaction",
+      "method": "POST",
+      "sortNum": 30000,
+      "headers": [
+        {"name": "Authorization", "value": "Bearer YOUR_BUYER_TOKEN_HERE"},
+        {"name": "Content-Type", "value": "application/json"}
+      ],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"operation\": \"sell\"\n}"
+      }
+    },
+    {
+      "_id": "validate-sell-seller",
+      "colId": "enhanced-campusdeals",
+      "containerId": "protected-routes",
+      "name": "Validate Sell Permission - Seller",
+      "url": "http://localhost:5000/api/auth/validate-transaction",
+      "method": "POST",
+      "sortNum": 40000,
+      "headers": [
+        {"name": "Authorization", "value": "Bearer YOUR_SELLER_TOKEN_HERE"},
+        {"name": "Content-Type", "value": "application/json"}
+      ],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"operation\": \"sell\"\n}"
+      }
+    }
+  ]
+}

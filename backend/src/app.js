@@ -6,9 +6,11 @@ const bodyParser = require("body-parser");
 // Import routes
 const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
+const productRoutes = require('./routes/productRoutes');
 
 // Import middleware
 const { authenticateToken, authorizeRoles } = require('./middleware/auth');
+const { requireAuthForBuy, requireAuthForSell, validateTransactionData } = require('./middleware/transaction');
 
 const app = express();
 
@@ -34,84 +36,13 @@ const db = require('./config/db');
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/products', productRoutes);
 
-// Protected routes for products, cart, and orders
+// Protected routes for cart and orders
 /* ============================
-   PRODUCTS CRUD (Protected for admin/seller)
+   CART CRUD (Protected - User specific with Buy Authentication)
 ============================ */
-app.post("/api/products", authenticateToken, authorizeRoles('admin', 'seller'), (req, res) => {
-  const {
-    product_name,
-    product_variant,
-    product_code,
-    product_price,
-    product_images,
-    quantity,
-  } = req.body;
-
-  const sql =
-    "INSERT INTO Products (product_name, product_variant, product_code, product_price, product_images, quantity) VALUES (?,?,?,?,?,?)";
-
-  db.query(
-    sql,
-    [
-      product_name,
-      product_variant,
-      product_code,
-      product_price,
-      product_images,
-      quantity,
-    ],
-    (err) => {
-      if (err) {
-        console.error(err);
-        return res.status(500).json({ message: "❌ Error adding product", error: err.message });
-      }
-      res.json({ message: "✅ Product Added!" });
-    }
-  );
-});
-
-// Public route to view products
-app.get("/api/products", (req, res) => {
-  db.query("SELECT * FROM Products", (err, results) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ message: "❌ Error fetching products", error: err.message });
-    }
-    res.json(results);
-  });
-});
-
-app.put("/api/products/:id", authenticateToken, authorizeRoles('admin', 'seller'), (req, res) => {
-  const { id } = req.params;
-  const { product_price, quantity } = req.body;
-  const sql =
-    "UPDATE Products SET product_price=?, quantity=? WHERE product_id=?";
-  db.query(sql, [product_price, quantity, id], (err) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ message: "❌ Error updating product", error: err.message });
-    }
-    res.json({ message: "✅ Product Updated!" });
-  });
-});
-
-app.delete("/api/products/:id", authenticateToken, authorizeRoles('admin'), (req, res) => {
-  const { id } = req.params;
-  db.query("DELETE FROM Products WHERE product_id=?", [id], (err) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ message: "❌ Error deleting product", error: err.message });
-    }
-    res.json({ message: "🗑 Product Deleted!" });
-  });
-});
-
-/* ============================
-   CART CRUD (Protected - User specific)
-============================ */
-app.post("/api/cart", authenticateToken, (req, res) => {
+app.post("/api/cart", requireAuthForBuy, validateTransactionData(['product_id', 'quantity']), (req, res) => {
   const { product_id, quantity } = req.body;
   const user_id = req.user.userId; // Get user ID from JWT token
   
@@ -119,13 +50,24 @@ app.post("/api/cart", authenticateToken, (req, res) => {
   db.query(sql, [user_id, product_id, quantity], (err) => {
     if (err) {
       console.error(err);
-      return res.status(500).json({ message: "❌ Error adding to cart", error: err.message });
+      return res.status(500).json({ 
+        success: false,
+        message: "❌ Error adding to cart", 
+        error: err.message 
+      });
     }
-    res.json({ message: "✅ Item added to cart!" });
+    res.json({ 
+      success: true,
+      message: "✅ Item added to cart!",
+      user: {
+        userId: user_id,
+        name: req.userProfile.user_name
+      }
+    });
   });
 });
 
-app.get("/api/cart", authenticateToken, (req, res) => {
+app.get("/api/cart", requireAuthForBuy, (req, res) => {
   const user_id = req.user.userId; // Get user ID from JWT token
   
   const sql = `SELECT c.cart_id, p.product_name, p.product_price, c.quantity, (p.product_price * c.quantity) AS total
@@ -135,9 +77,21 @@ app.get("/api/cart", authenticateToken, (req, res) => {
   db.query(sql, [user_id], (err, results) => {
     if (err) {
       console.error(err);
-      return res.status(500).json({ message: "❌ Error fetching cart", error: err.message });
+      return res.status(500).json({ 
+        success: false,
+        message: "❌ Error fetching cart", 
+        error: err.message 
+      });
     }
-    res.json(results);
+    res.json({
+      success: true,
+      message: "✅ Cart retrieved successfully",
+      cart: results,
+      user: {
+        userId: user_id,
+        name: req.userProfile.user_name
+      }
+    });
   });
 });
 
@@ -178,10 +132,10 @@ app.delete("/api/cart/:id", authenticateToken, (req, res) => {
 });
 
 /* ============================
-   ORDERS CRUD (Protected - User specific)
+   ORDERS CRUD (Protected - User specific with Buy Authentication)
 ============================ */
-app.post("/api/orders", authenticateToken, (req, res) => {
-  const { serial_no, total_amount, payment_method, status } = req.body;
+app.post("/api/orders", requireAuthForBuy, validateTransactionData(['total_amount', 'payment_method']), (req, res) => {
+  const { serial_no, total_amount, payment_method, status = 'pending' } = req.body;
   const user_id = req.user.userId; // Get user ID from JWT token
   
   const sql =
@@ -192,23 +146,46 @@ app.post("/api/orders", authenticateToken, (req, res) => {
     (err) => {
       if (err) {
         console.error(err);
-        return res.status(500).json({ message: "❌ Error creating order", error: err.message });
+        return res.status(500).json({ 
+          success: false,
+          message: "❌ Error creating order", 
+          error: err.message 
+        });
       }
-      res.json({ message: "✅ Order Created!" });
+      res.json({ 
+        success: true,
+        message: "✅ Order Created!",
+        buyer: {
+          userId: user_id,
+          name: req.userProfile.user_name
+        }
+      });
     }
   );
 });
 
-app.get("/api/orders", authenticateToken, (req, res) => {
+app.get("/api/orders", requireAuthForBuy, (req, res) => {
   const user_id = req.user.userId; // Get user ID from JWT token
   
   const sql = "SELECT * FROM Orders WHERE user_id=?";
   db.query(sql, [user_id], (err, results) => {
     if (err) {
       console.error(err);
-      return res.status(500).json({ message: "❌ Error fetching orders", error: err.message });
+      return res.status(500).json({ 
+        success: false,
+        message: "❌ Error fetching orders", 
+        error: err.message 
+      });
     }
-    res.json(results);
+    res.json({
+      success: true,
+      message: "✅ Orders retrieved successfully",
+      orders: results,
+      user: {
+        userId: user_id,
+        name: req.userProfile.user_name
+      }
+    });
   });
 });
 
