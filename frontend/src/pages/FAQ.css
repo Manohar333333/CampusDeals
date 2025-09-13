@@ -1,0 +1,322 @@
+/* FAQ Wrapper with smooth slide-in animation */
+.faq-wrapper {
+    padding: 10px 20px 40px 20px;
+  opacity: 0;
+  transform: translateX(-100px);
+  transition: all 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform, opacity;
+}
+
+.faq-wrapper.faq-slide-in {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Main FAQ Container */
+.faq-container {
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 50px 40px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  position: relative;
+  overflow: hidden;
+}
+
+.faq-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #021026 0%, #051527 50%, #021a31 100%);
+  border-radius: 24px 24px 0 0;
+}
+
+/* FAQ Header */
+.faq-header {
+  text-align: center;
+  margin-bottom: 45px;
+  opacity: 0;
+  transform: translateX(-80px);
+  animation: slideInFromLeft 1s ease-out 0.5s forwards;
+}
+
+.faq-title {
+  font-size: 2.8rem;
+  font-weight: 800;
+  margin: 0 0 20px 0;
+  color: #0e0545;
+  letter-spacing: -1px;
+  position: relative;
+}
+
+.faq-title::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, #081a35 0%, #041b35 100%);
+  border-radius: 2px;
+}
+
+.faq-subtitle {
+  font-size: 1.2rem;
+  color: #04132a;
+  font-weight: 500;
+  margin: 0;
+}
+
+/* FAQ List */
+.faq-list {
+  max-width: 100%;
+}
+
+/* Individual FAQ Items */
+.faq-item {
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 16px;
+  margin-bottom: 18px;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  opacity: 0;
+  transform: translateX(-100px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.faq-item.faq-item-slide-in {
+  opacity: 1;
+  transform: translateX(0);
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.faq-item:hover {
+  border-color: rgba(0, 102, 255, 0.15);
+  box-shadow: 0 8px 25px rgba(0, 102, 255, 0.08);
+  transform: translateY(-2px) translateX(4px);
+}
+
+.faq-item.active {
+  border-color: rgba(0, 102, 255, 0.25);
+  background: #ffffff;
+  box-shadow: 0 10px 30px rgba(0, 102, 255, 0.1);
+}
+
+/* FAQ Questions */
+.faq-question {
+  padding: 26px 32px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  user-select: none;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  position: relative;
+}
+
+.faq-question::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 0;
+  background: linear-gradient(135deg, rgba(0, 102, 255, 0.1) 0%, rgba(74, 144, 226, 0.05) 100%);
+  transition: width 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  border-radius: 16px 0 0 16px;
+}
+
+.faq-question:hover::before {
+  width: 6px;
+}
+
+.faq-question:hover {
+  background: rgba(0, 102, 255, 0.02);
+  padding-left: 40px;
+}
+
+.faq-question h3 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin: 0;
+  color: #021b40;
+  flex: 1;
+  padding-right: 24px;
+  transition: all 0.3s ease;
+  line-height: 1.4;
+}
+
+.faq-question:hover h3 {
+  color: #041630;
+  transform: translateX(4px);
+}
+
+/* FAQ Icons */
+.faq-icon {
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  color: #031530;
+  opacity: 0.8;
+  font-size: 1.1rem;
+}
+
+.faq-icon.rotated {
+  transform: rotate(180deg);
+  opacity: 1;
+  color: #071832;
+}
+
+/* FAQ Answers */
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.faq-answer.expanded {
+  max-height: 250px;
+}
+
+.faq-answer-content {
+  padding: 0 32px 28px 32px;
+  border-top: 1px solid rgba(0, 0, 0, 0.04);
+  position: relative;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.1s;
+}
+
+.faq-answer.expanded .faq-answer-content {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.faq-answer-content::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 32px;
+  right: 32px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(0, 102, 255, 0.1) 50%, transparent 100%);
+}
+
+.faq-answer-content p {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  margin: 22px 0 0 0;
+  color: #4a5568;
+  padding-left: 8px;
+  border-left: 3px solid rgba(0, 102, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+/* Keyframe Animations */
+@keyframes slideInFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-80px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px) translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) translateX(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .faq-container {
+    padding: 35px 25px;
+    border-radius: 20px;
+  }
+  
+  .faq-title {
+    font-size: 2.2rem;
+  }
+  
+  .faq-subtitle {
+    font-size: 1.1rem;
+  }
+  
+  .faq-question {
+    padding: 20px 24px;
+  }
+  
+  .faq-question:hover {
+    padding-left: 32px;
+  }
+  
+  .faq-question h3 {
+    font-size: 1.05rem;
+    padding-right: 16px;
+  }
+  
+  .faq-answer-content {
+    padding: 0 24px 24px 24px;
+  }
+  
+  .faq-answer-content::before {
+    left: 24px;
+    right: 24px;
+  }
+  
+  .faq-answer-content p {
+    font-size: 1rem;
+    margin: 18px 0 0 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .faq-container {
+    padding: 30px 20px;
+    border-radius: 16px;
+  }
+  
+  .faq-title {
+    font-size: 2rem;
+  }
+  
+  .faq-subtitle {
+    font-size: 1rem;
+  }
+  
+  .faq-question {
+    padding: 18px 20px;
+  }
+  
+  .faq-question:hover {
+    padding-left: 28px;
+  }
+  
+  .faq-question h3 {
+    font-size: 1rem;
+  }
+  
+  .faq-answer-content {
+    padding: 0 20px 20px 20px;
+  }
+  
+  .faq-answer-content::before {
+    left: 20px;
+    right: 20px;
+  }
+  
+  .faq-item:hover {
+    transform: translateY(-1px) translateX(2px);
+  }
+}

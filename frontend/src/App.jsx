@@ -4,12 +4,13 @@ import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Buy from "./pages/Buy";
 import Sell from "./pages/Sell";
-import Tips from "./pages/Tips";
+import TipsX from "./pages/TipsX";
 import Faqs from "./pages/Faqs";
 import Footer from "./components/Footer";
 import logo from "./assets/logo.jpg"; 
 import HeroBanner from "./components/HeroBanner"; // ✅ new
 import ScrollToTop from "./components/ScrollToTop";
+import logo from "./assets/logo.png"; 
 
 const App = () => {
   return (
@@ -21,15 +22,14 @@ const App = () => {
         {/* Navbar */}
         <Navbar />
 
-        {/* ✅ Hero Banner (visible on every page) */}
-        <HeroBanner />
+       
 
         {/* Pages */}
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/buy" element={<Buy />} />
           <Route path="/sell" element={<Sell />} />
-          <Route path="/tips" element={<Tips />} />
+          <Route path="/tips" element={<TipsX />} />
           <Route path="/faqs" element={<Faqs />} />
         </Routes>
 
