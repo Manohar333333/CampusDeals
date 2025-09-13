@@ -1,0 +1,458 @@
+/* Main Container */
+.tips-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 50%, #e0e7ff 100%);
+}
+
+/* Header Styles */
+.header {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(90deg, #0f172a 0%, #1e3a8a 50%, #312e81 100%);
+}
+
+.header-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.header-pattern {
+  position: absolute;
+  inset: 0;
+  opacity: 0.1;
+}
+
+.header-skew {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.05) 50%, transparent 100%);
+  transform: skewY(-6deg);
+}
+
+.header-content {
+  position: relative;
+  z-index: 10;
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 5rem 1.5rem;
+  text-align: center;
+}
+
+.header-badge {
+  display: inline-block;
+  margin-bottom: 1rem;
+}
+
+.badge-text {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background: rgba(59, 130, 246, 0.2);
+  color: #bfdbfe;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(96, 165, 250, 0.3);
+}
+
+.header-title {
+  font-size: 3.75rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 1.5rem;
+  line-height: 1.1;
+}
+
+.header-subtitle {
+  display: block;
+  font-size: 1.875rem;
+  font-weight: 400;
+  color: #bfdbfe;
+  margin-top: 0.5rem;
+}
+
+.header-description {
+  font-size: 1.125rem;
+  color: #cbd5e1;
+  max-width: 32rem;
+  margin: 0 auto;
+  line-height: 1.75;
+}
+
+/* Responsive Header */
+@media (max-width: 768px) {
+  .header-title {
+    font-size: 2.25rem;
+  }
+  
+  .header-subtitle {
+    font-size: 1.25rem;
+  }
+}
+
+/* Tips Section */
+.tips-section {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 4rem 1.5rem;
+}
+
+.tips-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.section-title {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 1rem;
+}
+
+.section-divider {
+  width: 6rem;
+  height: 0.25rem;
+  background: linear-gradient(90deg, #3b82f6 0%, #6366f1 100%);
+  margin: 0 auto;
+  border-radius: 9999px;
+}
+
+/* Tips Grid */
+.tips-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+@media (min-width: 768px) {
+  .tips-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .tips-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Tip Wrapper Animation */
+.tip-wrapper {
+  transform: translateY(2rem) scale(0.95);
+  opacity: 0;
+  transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.tip-wrapper.visible {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+
+.tip-group {
+  position: relative;
+  height: 100%;
+}
+
+/* Tip Card */
+.tip-card {
+  position: relative;
+  background: white;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  height: 100%;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(226, 232, 240, 0.5);
+}
+
+.tip-card:hover {
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  transform: translateY(-0.5rem);
+}
+
+/* Category Badge */
+.category-badge {
+  position: absolute;
+  top: -0.75rem;
+  left: 1.5rem;
+}
+
+.badge {
+  padding: 0.25rem 0.75rem;
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: 9999px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.badge.academic {
+  background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+}
+
+.badge.food {
+  background: linear-gradient(135deg, #f97316 0%, #ef4444 100%);
+}
+
+.badge.entertainment {
+  background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
+}
+
+.badge.technology {
+  background: linear-gradient(135deg, #10b981 0%, #14b8a6 100%);
+}
+
+.badge.savings {
+  background: linear-gradient(135deg, #eab308 0%, #f97316 100%);
+}
+
+/* Tip Number */
+.tip-number {
+  position: absolute;
+  top: -0.75rem;
+  right: -0.75rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: linear-gradient(135deg, #374151 0%, #111827 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.tip-number span {
+  color: white;
+  font-weight: 700;
+  font-size: 0.875rem;
+}
+
+/* Tip Content */
+.tip-content {
+  padding-top: 1rem;
+}
+
+.tip-icon {
+  margin-bottom: 1rem;
+  transform: scale(1);
+  transition: transform 0.3s ease;
+}
+
+.tip-card:hover .tip-icon {
+  transform: scale(1.1);
+}
+
+.tip-icon svg {
+  width: 3rem;
+  height: 3rem;
+  color: #2563eb;
+  transition: color 0.3s ease;
+}
+
+.tip-card:hover .tip-icon svg {
+  color: #1d4ed8;
+}
+
+.tip-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 0.75rem;
+  transition: color 0.3s ease;
+}
+
+.tip-card:hover .tip-title {
+  color: #2563eb;
+}
+
+.tip-description {
+  color: #64748b;
+  line-height: 1.75;
+  font-size: 0.875rem;
+  transition: color 0.3s ease;
+}
+
+.tip-card:hover .tip-description {
+  color: #1e293b;
+}
+
+/* Hover Accent */
+.hover-accent {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 0.25rem;
+  background: linear-gradient(90deg, #3b82f6 0%, #6366f1 100%);
+  border-bottom-left-radius: 1rem;
+  border-bottom-right-radius: 1rem;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.tip-card:hover .hover-accent {
+  transform: scaleX(1);
+}
+
+/* CTA Section */
+.cta-section {
+  margin-top: 5rem;
+}
+
+.cta-container {
+  background: linear-gradient(135deg, #1e293b 0%, #111827 50%, #1e3a8a 100%);
+  border-radius: 1.5rem;
+  padding: 3rem;
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-decoration {
+  position: absolute;
+  inset: 0;
+  opacity: 0.1;
+}
+
+.decoration-circle-1 {
+  position: absolute;
+  top: 2.5rem;
+  right: 2.5rem;
+  width: 10rem;
+  height: 10rem;
+  background: #60a5fa;
+  border-radius: 50%;
+  filter: blur(3rem);
+}
+
+.decoration-circle-2 {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 2.5rem;
+  width: 8rem;
+  height: 8rem;
+  background: #a78bfa;
+  border-radius: 50%;
+  filter: blur(2rem);
+}
+
+.cta-content {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+}
+
+.cta-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: white;
+}
+
+.cta-description {
+  color: #cbd5e1;
+  font-size: 1.125rem;
+  margin-bottom: 2rem;
+  max-width: 32rem;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.75;
+}
+
+.cta-features {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1.5rem;
+  background: rgba(51, 65, 85, 0.5);
+  backdrop-filter: blur(4px);
+  border-radius: 1rem;
+  border: 1px solid rgba(100, 116, 139, 0.3);
+  transition: all 0.3s ease;
+}
+
+.feature-item:hover {
+  background: rgba(71, 85, 105, 0.5);
+}
+
+.feature-icon {
+  padding: 0.5rem;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.feature-item:nth-child(1) .feature-icon {
+  background: rgba(59, 130, 246, 0.2);
+}
+
+.feature-item:nth-child(1):hover .feature-icon {
+  background: rgba(59, 130, 246, 0.3);
+}
+
+.feature-item:nth-child(2) .feature-icon {
+  background: rgba(99, 102, 241, 0.2);
+}
+
+.feature-item:nth-child(2):hover .feature-icon {
+  background: rgba(99, 102, 241, 0.3);
+}
+
+.feature-item:nth-child(3) .feature-icon {
+  background: rgba(6, 182, 212, 0.2);
+}
+
+.feature-item:nth-child(3):hover .feature-icon {
+  background: rgba(6, 182, 212, 0.3);
+}
+
+.feature-icon svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: #cbd5e1;
+}
+
+.feature-text {
+  color: #e2e8f0;
+  font-weight: 500;
+}
+
+.cta-footer {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(51, 65, 85, 0.5);
+}
+
+.footer-text {
+  color: #94a3b8;
+  font-size: 0.875rem;
+}
+
+/* Responsive CTA */
+@media (max-width: 768px) {
+  .cta-title {
+    font-size: 1.5rem;
+  }
+  
+  .cta-features {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .feature-item {
+    width: 100%;
+    max-width: 300px;
+    justify-content: center;
+  }
+}
