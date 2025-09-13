@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ProductCard from "../components/ProductCard";
-import BuyForm from "./BuyForm"; // ✅ Import modal form
+import BuyForm from "./UserForm"; // ✅ Import modal form
 import "./Buy.css";
 
 // ✅ Import images
@@ -87,6 +87,7 @@ const Buy = () => {
 
       {/* 📝 Buyer Form as Modal */}
       {showForm && <BuyForm cart={cart} onClose={handleCloseForm} />}
+      
     </div>
   );
 };

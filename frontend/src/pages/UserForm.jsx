@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./BuyForm.css";
+import "./UserForm.css";
 
 const BuyForm = ({ cart, onClose }) => {
   const [agreed, setAgreed] = useState(false); // ✅ track checkbox
@@ -8,7 +8,7 @@ const BuyForm = ({ cart, onClose }) => {
     <div className="modal-overlay">
       <div className="modal-content">
         <button className="close-button" onClick={onClose}>✖</button>
-        <h2>Buyer Details</h2>
+        <h2>User Details</h2>
         <form>
           <div className="form-row">
             <label>
@@ -27,6 +27,13 @@ const BuyForm = ({ cart, onClose }) => {
               <input type="email" required />
             </label>
             <label>
+              Phone Number:
+              <input type="tel" pattern="[0-9]{10}" required placeholder="10-digit number" />
+            </label>
+          </div>
+
+          <div className="form-row">
+            <label>
               Year:
               <select required>
                 <option value="">Select Year</option>
@@ -36,9 +43,6 @@ const BuyForm = ({ cart, onClose }) => {
                 <option value="4">4th Year</option>
               </select>
             </label>
-          </div>
-
-          <div className="form-row">
             <label>
               Branch:
               <select required>
@@ -55,6 +59,9 @@ const BuyForm = ({ cart, onClose }) => {
                 <option value="chem">Chemical</option>
               </select>
             </label>
+          </div>
+
+          <div className="form-row">
             <label>
               Section:
               <select required>
@@ -68,7 +75,7 @@ const BuyForm = ({ cart, onClose }) => {
           </div>
 
           <div className="form-row radio-row">
-            <span>Day Scholar/ Hosteller:</span>
+            <span>Day Scholar / Hosteller:</span>
             <label>
               <input type="radio" name="accommodation" value="day" required /> Day Scholar
             </label>
