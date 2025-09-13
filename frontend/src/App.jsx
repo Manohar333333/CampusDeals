@@ -5,10 +5,8 @@ import Home from "./pages/Home";
 import Buy from "./pages/Buy";
 import Sell from "./pages/Sell";
 import TipsX from "./pages/TipsX";
-import Faqs from "./pages/Faqs";
 import Footer from "./components/Footer";
 import logo from "./assets/logo.png"; 
-
 
 const App = () => {
   return (
@@ -28,7 +26,6 @@ const App = () => {
           <Route path="/buy" element={<Buy />} />
           <Route path="/sell" element={<Sell />} />
           <Route path="/tips" element={<TipsX />} />
-          <Route path="/faqs" element={<Faqs />} />
         </Routes>
 
         {/* Footer */}

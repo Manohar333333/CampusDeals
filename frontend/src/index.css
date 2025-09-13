@@ -13,29 +13,127 @@
   font-weight: bold;
 }
 
-/* Navbar */
+/* Navbar Base */
 .navbar {
-  background: #f8f8f8;
-  padding: 1rem;
-}
-
-.navbar ul {
   display: flex;
-  justify-content: center;
-  list-style: none;
-  gap: 1.5rem;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  background: white;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
-.navbar a {
+.navbar-scrolled {
+  background: #f8f9fa;
+}
+
+/* Left side */
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo {
+  height: 40px;
+}
+
+.logo-text {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+/* Hamburger */
+.hamburger {
+  font-size: 28px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: none; /* hidden on desktop */
+  color: #ffffff;
+}
+
+/* Links */
+.nav-links {
+  display: flex;
+  gap: 20px;
+}
+
+.nav-link {
   text-decoration: none;
   color: #333;
   font-weight: 500;
+  padding: 10px 0;
+  transition: color 0.3s;
 }
 
-.navbar a:hover {
-  color: #4facfe;
-  border-bottom: 2px solid #4facfe;
+.nav-link:hover {
+  color: #007bff;
 }
+
+.nav-link-active {
+  border-bottom: 2px solid #007bff;
+  padding-bottom: 3px;
+}
+
+/* Right side */
+.nav-right {
+  display: flex;
+  gap: 15px;
+}
+
+.profile-icon {
+  font-size: 20px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.logout-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* Mobile View */
+@media (max-width: 768px) {
+  .hamburger {
+    display: block; /* show hamburger on mobile */
+  }
+
+  /* Initially hide menu */
+  .nav-links {
+    position: absolute;
+    top: 60px;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    background: rgb(0, 0, 0);
+    text-align: left;
+    padding: 15px 20px;
+    display: none; /* default hidden */
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    z-index: 999;
+  }
+
+  /* When menu is open */
+  .nav-links.open {
+    display: flex; /* show */
+  }
+
+  .nav-link {
+    padding: 12px 0;
+    border-bottom: 1px solid #000000;
+  }
+
+  .nav-right {
+    gap: 12px;
+  }
+}
+
+
 
 /* Sidebar */
 .sidebar {
@@ -62,6 +160,22 @@
 
 .sidebar a:hover {
   color: #4facfe;
+}
+
+/* Sidebar Backdrop */
+.sidebar-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 900;
+  display: none;
+}
+
+.sidebar.open + .sidebar-backdrop {
+  display: block;
 }
 
 /* Footer */
