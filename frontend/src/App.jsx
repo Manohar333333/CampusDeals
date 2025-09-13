@@ -7,7 +7,6 @@ import Sell from "./pages/Sell";
 import TipsX from "./pages/TipsX";
 import Faqs from "./pages/Faqs";
 import Footer from "./components/Footer";
-import logo from "./assets/logo.jpg"; 
 import HeroBanner from "./components/HeroBanner"; // ✅ new
 import ScrollToTop from "./components/ScrollToTop";
 import logo from "./assets/logo.png"; 
