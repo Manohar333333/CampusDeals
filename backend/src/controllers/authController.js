@@ -1,9 +1,20 @@
 const db = require('../config/db');
 const { generateToken, hashPassword, comparePassword } = require('../utils/auth');
+const { 
+  validateEmail, 
+  validatePassword, 
+  validateRequiredFields, 
+  checkUserExists, 
+  getUserByEmail,
+  sanitizeUserInput 
+} = require('../utils/validation');
 
-// User Registration
-const register = async (req, res) => {
+// Enhanced User Registration/Signup
+const signup = async (req, res) => {
   try {
+    // Sanitize input data
+    const sanitizedData = sanitizeUserInput(req.body);
+    
     const {
       user_name,
       user_email,
@@ -16,24 +27,60 @@ const register = async (req, res) => {
       user_residency,
       payment_received = 0,
       amount_given = 0
-    } = req.body;
+    } = sanitizedData;
 
-    // Validation
-    if (!user_name || !user_email || !user_password) {
+    // Validate required fields
+    const requiredFields = ['user_name', 'user_email', 'user_password'];
+    const fieldValidation = validateRequiredFields(sanitizedData, requiredFields);
+    
+    if (!fieldValidation.isValid) {
       return res.status(400).json({ 
-        message: '❌ Name, email, and password are required' 
+        success: false,
+        message: '❌ Missing required fields',
+        details: fieldValidation.message,
+        missingFields: fieldValidation.missingFields
+      });
+    }
+
+    // Validate email format
+    if (!validateEmail(user_email)) {
+      return res.status(400).json({ 
+        success: false,
+        message: '❌ Please provide a valid email address',
+        field: 'user_email'
+      });
+    }
+
+    // Validate password strength
+    const passwordValidation = validatePassword(user_password);
+    if (!passwordValidation.isValid) {
+      return res.status(400).json({ 
+        success: false,
+        message: '❌ Password validation failed',
+        details: passwordValidation.message,
+        field: 'user_password'
       });
     }
 
     // Check if user already exists
-    const [existingUser] = await db.query(
-      'SELECT user_id FROM Users WHERE user_email = ?',
-      [user_email]
-    );
-
-    if (existingUser.length > 0) {
+    const userExistence = await checkUserExists(user_email);
+    if (userExistence.exists) {
       return res.status(409).json({ 
-        message: '❌ User with this email already exists' 
+        success: false,
+        message: '❌ User with this email already exists',
+        suggestion: 'Please login instead or use a different email address',
+        field: 'user_email'
+      });
+    }
+
+    // Validate role
+    const validRoles = ['buyer', 'seller', 'admin'];
+    if (!validRoles.includes(role)) {
+      return res.status(400).json({ 
+        success: false,
+        message: '❌ Invalid role specified',
+        validRoles: validRoles,
+        field: 'role'
       });
     }
 
@@ -64,6 +111,7 @@ const register = async (req, res) => {
     const token = generateToken(result.insertId, user_email, role);
 
     res.status(201).json({
+      success: true,
       message: '✅ User registered successfully',
       token,
       user: {
@@ -71,54 +119,90 @@ const register = async (req, res) => {
         name: user_name,
         email: user_email,
         role: role
+      },
+      instructions: {
+        message: 'Save this token for future requests',
+        usage: 'Include token in Authorization header as: Bearer YOUR_TOKEN'
       }
     });
 
   } catch (error) {
-    console.error('Registration error:', error);
-    res.status(500).json({ message: '❌ Internal server error' });
+    console.error('Signup error:', error);
+    res.status(500).json({ 
+      success: false,
+      message: '❌ Internal server error during signup',
+      error: process.env.NODE_ENV === 'development' ? error.message : 'Please try again later'
+    });
   }
 };
 
-// User Login
+// Enhanced User Login with Database Validation
 const login = async (req, res) => {
   try {
-    const { user_email, user_password } = req.body;
+    // Sanitize input data
+    const sanitizedData = sanitizeUserInput(req.body);
+    const { user_email, user_password } = sanitizedData;
 
-    // Validation
-    if (!user_email || !user_password) {
+    // Validate required fields
+    const requiredFields = ['user_email', 'user_password'];
+    const fieldValidation = validateRequiredFields(sanitizedData, requiredFields);
+    
+    if (!fieldValidation.isValid) {
       return res.status(400).json({ 
-        message: '❌ Email and password are required' 
+        success: false,
+        message: '❌ Email and password are required',
+        details: fieldValidation.message,
+        missingFields: fieldValidation.missingFields
       });
     }
 
-    // Find user by email
-    const [users] = await db.query(
-      'SELECT user_id, user_name, user_email, user_password, role FROM Users WHERE user_email = ?',
-      [user_email]
-    );
-
-    if (users.length === 0) {
-      return res.status(401).json({ 
-        message: '❌ Invalid email or password' 
+    // Validate email format
+    if (!validateEmail(user_email)) {
+      return res.status(400).json({ 
+        success: false,
+        message: '❌ Please provide a valid email address',
+        field: 'user_email'
       });
     }
 
-    const user = users[0];
+    // Check if user exists in database
+    const userExistence = await checkUserExists(user_email);
+    if (!userExistence.exists) {
+      return res.status(404).json({ 
+        success: false,
+        message: '❌ User not found',
+        suggestion: 'Please sign up first if you don\'t have an account',
+        action: 'signup_required'
+      });
+    }
 
-    // Compare password
+    // Get user details for authentication
+    const user = await getUserByEmail(user_email);
+    if (!user) {
+      return res.status(404).json({ 
+        success: false,
+        message: '❌ User not found',
+        suggestion: 'Please sign up first if you don\'t have an account',
+        action: 'signup_required'
+      });
+    }
+
+    // Validate password
     const isPasswordValid = await comparePassword(user_password, user.user_password);
-
     if (!isPasswordValid) {
       return res.status(401).json({ 
-        message: '❌ Invalid email or password' 
+        success: false,
+        message: '❌ Invalid password',
+        suggestion: 'Please check your password and try again',
+        field: 'user_password'
       });
     }
 
-    // Generate JWT token
+    // Generate JWT token for successful login
     const token = generateToken(user.user_id, user.user_email, user.role);
 
     res.json({
+      success: true,
       message: '✅ Login successful',
       token,
       user: {
@@ -126,12 +210,25 @@ const login = async (req, res) => {
         name: user.user_name,
         email: user.user_email,
         role: user.role
+      },
+      permissions: {
+        canBuy: true,
+        canSell: ['seller', 'admin'].includes(user.role),
+        canAdmin: user.role === 'admin'
+      },
+      instructions: {
+        message: 'You can now access buy/sell features',
+        usage: 'Include token in Authorization header as: Bearer YOUR_TOKEN'
       }
     });
 
   } catch (error) {
     console.error('Login error:', error);
-    res.status(500).json({ message: '❌ Internal server error' });
+    res.status(500).json({ 
+      success: false,
+      message: '❌ Internal server error during login',
+      error: process.env.NODE_ENV === 'development' ? error.message : 'Please try again later'
+    });
   }
 };
 
@@ -148,22 +245,101 @@ const getProfile = async (req, res) => {
     );
 
     if (users.length === 0) {
-      return res.status(404).json({ message: '❌ User not found' });
+      return res.status(404).json({ 
+        success: false,
+        message: '❌ User not found' 
+      });
     }
 
+    const user = users[0];
+
     res.json({
+      success: true,
       message: '✅ Profile retrieved successfully',
-      user: users[0]
+      user: user,
+      permissions: {
+        canBuy: true,
+        canSell: ['seller', 'admin'].includes(user.role),
+        canAdmin: user.role === 'admin'
+      }
     });
 
   } catch (error) {
     console.error('Get profile error:', error);
-    res.status(500).json({ message: '❌ Internal server error' });
+    res.status(500).json({ 
+      success: false,
+      message: '❌ Internal server error',
+      error: process.env.NODE_ENV === 'development' ? error.message : 'Please try again later'
+    });
+  }
+};
+
+// Validate user for buy/sell operations
+const validateUserForTransaction = async (req, res) => {
+  try {
+    const userId = req.user.userId;
+    const { operation } = req.body; // 'buy' or 'sell'
+
+    const user = await getUserById(userId);
+    if (!user) {
+      return res.status(404).json({ 
+        success: false,
+        message: '❌ User not found',
+        action: 'login_required'
+      });
+    }
+
+    // Check permissions based on operation
+    let canPerformOperation = false;
+    let message = '';
+
+    if (operation === 'buy') {
+      canPerformOperation = true;
+      message = '✅ User authorized for buying';
+    } else if (operation === 'sell') {
+      canPerformOperation = ['seller', 'admin'].includes(user.role);
+      message = canPerformOperation 
+        ? '✅ User authorized for selling' 
+        : '❌ User not authorized for selling. Seller or admin role required.';
+    } else {
+      return res.status(400).json({ 
+        success: false,
+        message: '❌ Invalid operation. Must be "buy" or "sell"'
+      });
+    }
+
+    res.json({
+      success: true,
+      authorized: canPerformOperation,
+      message: message,
+      user: {
+        userId: user.user_id,
+        name: user.user_name,
+        role: user.role
+      },
+      operation: operation,
+      permissions: {
+        canBuy: true,
+        canSell: ['seller', 'admin'].includes(user.role),
+        canAdmin: user.role === 'admin'
+      }
+    });
+
+  } catch (error) {
+    console.error('Transaction validation error:', error);
+    res.status(500).json({ 
+      success: false,
+      message: '❌ Internal server error during validation',
+      error: process.env.NODE_ENV === 'development' ? error.message : 'Please try again later'
+    });
   }
 };
 
 module.exports = {
-  register,
+  signup,
   login,
-  getProfile
+  getProfile,
+  validateUserForTransaction,
+  // Keep backward compatibility
+  register: signup
 };
