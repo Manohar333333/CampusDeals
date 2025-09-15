@@ -9,8 +9,8 @@ import {
 } from "react-icons/fa";
 import "./Home.css";
 import HeroBanner from "../../components/HeroBanner/HeroBanner";
-import "./FAQ.css";
 import FAQ from "../FAQ/FAQ";
+import "../FAQ/FAQ.css";
 const Home = () => {
   const [activeQuestion, setActiveQuestion] = useState(null);
   const [faqVisible, setFaqVisible] = useState(false);
