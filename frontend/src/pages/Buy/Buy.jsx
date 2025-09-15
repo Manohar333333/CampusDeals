@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import ProductCard from "../components/ProductCard";
-import BuyForm from "./UserForm"; // ✅ Import modal form
+
+import ProductCard from "../../components/ProductCard/ProductCard";
+import BuyForm from "../UserForm/UserForm";
 import "./Buy.css";
 
-// ✅ Import images
-import calciImg from "../assets/Calci.jpg";
-import drafterImg from "../assets/Drafter.jpeg";
-import chartHolderImg from "../assets/chart holder.jpg";
-import mechCoatImg from "../assets/Mechanical.jpeg";
-import chemCoatImg from "../assets/Chemical.jpeg";
+import calciImg from "../../assets/Calci.jpg";
+import drafterImg from "../../assets/Drafter.jpeg";
+import chartHolderImg from "../../assets/chart holder.jpg";
+import mechCoatImg from "../../assets/Mechanical.jpeg";
+import chemCoatImg from "../../assets/Chemical.jpeg";
 
 const Buy = () => {
   const products = [

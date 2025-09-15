@@ -2,13 +2,13 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import Home from "./pages/Home/Home";
-import Buy from "./pages/Buy";
+import Buy from "./pages/Buy/Buy";
 import Sell from "./pages/Sell/Sell";
 import TipsX from "./pages/Tips/TipsX";
 import Footer from "./components/Footer/Footer";
-import HeroBanner from "./components/HeroBanner/HeroBanner"; // ✅ new
+import HeroBanner from "./components/HeroBanner/HeroBanner";
 import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
-import logo from "./assets/logo.png"; 
+import logo from "./assets/logo.png";
 
 const App = () => {
   return (
