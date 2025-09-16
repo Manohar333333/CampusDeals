@@ -20,8 +20,8 @@ const ProfileDropdown = () => {
   useEffect(() => {
     // This would typically come from your auth context or API
     const mockUser = {
-      name: 'John Doe',
-      email: 'john.doe@university.edu',
+      name: 'Manohar Maradana',
+      email: 'maradanamanohar333@gmail.com',
       avatar: null, // or avatar URL
       cartItems: 3,
       orderCount: 12
