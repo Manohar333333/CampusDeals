@@ -7,7 +7,7 @@ import Sell from "./pages/Sell/Sell";
 import TipsX from "./pages/Tips/TipsX";
 import Footer from "./components/Footer/Footer";
 import HeroBanner from "./components/HeroBanner/HeroBanner";
-import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
+// import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
 import logo from "./assets/logo.png";
 
 const App = () => {
@@ -32,7 +32,7 @@ const App = () => {
 
         {/* Footer */}
         <Footer />
-        <ScrollToTop />
+        {/* <ScrollToTop /> */}
       </div>
     </Router>
   );
