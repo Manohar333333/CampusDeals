@@ -5,6 +5,9 @@
   color: #ffffff;
   padding: 0;
   margin: 0;
+.home {
+  position: relative;
+  /* ...existing styles... */
 }
 
 .home-content {

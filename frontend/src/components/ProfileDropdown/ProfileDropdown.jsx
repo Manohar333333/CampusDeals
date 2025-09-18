@@ -13,6 +13,7 @@ import './ProfileDropdown.css';
 const ProfileDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [user, setUser] = useState(null);
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
 
@@ -20,8 +21,8 @@ const ProfileDropdown = () => {
   useEffect(() => {
     // This would typically come from your auth context or API
     const mockUser = {
-      name: 'Manohar Maradana',
-      email: 'maradanamanohar333@gmail.com',
+      name: 'John Doe',
+      email: 'johndoe@example.com',
       avatar: null, // or avatar URL
       cartItems: 3,
       orderCount: 12
@@ -47,13 +48,21 @@ const ProfileDropdown = () => {
     setIsOpen(!isOpen);
   };
 
-  const handleLogout = () => {
+  const handleLogoutClick = () => {
+    setShowLogoutModal(true);
+    setIsOpen(false);
+  };
+
+  const confirmLogout = () => {
     // Add your logout logic here
     // This might involve clearing tokens, updating auth context, etc.
     console.log('Logging out...');
-    // For now, just close the dropdown and potentially redirect
-    setIsOpen(false);
+    setShowLogoutModal(false);
     // navigate('/login'); // Uncomment when you have a login page
+  };
+
+  const cancelLogout = () => {
+    setShowLogoutModal(false);
   };
 
   const closeDropdown = () => {
@@ -160,11 +169,43 @@ const ProfileDropdown = () => {
           {/* Logout */}
           <button 
             className="dropdown-item logout-item"
-            onClick={handleLogout}
+            onClick={handleLogoutClick}
           >
             <FaSignOutAlt className="item-icon" />
             <span>Logout</span>
           </button>
+        </div>
+      )}
+
+      {/* Logout Confirmation Modal */}
+      {showLogoutModal && (
+        <div className="logout-modal-overlay" style={{zIndex: 99999}} onClick={cancelLogout}>
+          <div className="logout-modal" style={{zIndex: 100000}} onClick={e => e.stopPropagation()}>
+            <div className="logout-modal-header">
+              <div className="logout-icon-wrapper">
+                <FaSignOutAlt className="logout-modal-icon" />
+              </div>
+              <h3>Confirm Logout</h3>
+              <p>Are you sure you want to logout?</p>
+            </div>
+            <div className="logout-modal-body">
+              <p>You will be signed out of your account and redirected to the login page.</p>
+            </div>
+            <div className="logout-modal-actions">
+              <button 
+                className="logout-cancel-btn"
+                onClick={cancelLogout}
+              >
+                Cancel
+              </button>
+              <button 
+                className="logout-confirm-btn"
+                onClick={confirmLogout}
+              >
+                Yes, Logout
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>
