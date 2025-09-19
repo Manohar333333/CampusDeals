@@ -1,8 +1,8 @@
-DROP DATABASE IF EXISTS campusdeals;
+DROP DATABASE IF EXISTS Campusdeals;
 
 -- 2) Create it fresh
-CREATE DATABASE campusdeals;
-USE campusdeals;
+CREATE DATABASE Campusdeals;
+USE Campusdeals;
 
 -- Users table
 CREATE TABLE Users (
