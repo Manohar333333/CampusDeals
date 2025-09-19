@@ -29,7 +29,6 @@ const App = () => {
           <Route path="/sell" element={<Sell />} />
           <Route path="/tips" element={<TipsX />} />
         </Routes>
-
         {/* Footer */}
         <Footer />
         {/* <ScrollToTop /> */}
