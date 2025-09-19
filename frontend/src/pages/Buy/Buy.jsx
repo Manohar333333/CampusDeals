@@ -86,7 +86,7 @@ const Buy = () => {
       </div>
 
       {/* 📝 Buyer Form as Modal */}
-      {showForm && <BuyForm cart={cart} onClose={handleCloseForm} />}
+      {/*{showForm && <BuyForm cart={cart} onClose={handleCloseForm} />}*/}
       
     </div>
   );
