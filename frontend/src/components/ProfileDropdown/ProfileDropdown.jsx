@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import './ProfileDropdown.css';
 import { 
   FaUser, 
   FaShoppingCart, 
@@ -8,7 +9,7 @@ import {
   FaSignOutAlt,
   FaChevronDown 
 } from 'react-icons/fa';
-import './ProfileDropdown.css';
+
 
 const ProfileDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
