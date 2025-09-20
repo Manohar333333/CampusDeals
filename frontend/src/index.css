@@ -14,21 +14,9 @@
 }
 
 /* Navbar Base */
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 20px;
-  background: white;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-}
 
-.navbar-scrolled {
-  background: #f8f9fa;
-}
+
+
 
 /* Left side */
 .nav-left {
@@ -273,14 +261,7 @@
   margin-top: 2rem;
 }
 
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #222;
-  color: white;
-  padding: 10px 20px;
-}
+
 
 .logo {
   font-size: 1.5rem;
@@ -309,14 +290,6 @@
 }
 
 /* --- Navbar --- */
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #2c3e50;
-  padding: 0.8rem 2rem;
-  color: white;
-}
 
 .logo-container {
   display: flex;
