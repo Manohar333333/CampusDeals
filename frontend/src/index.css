@@ -166,13 +166,7 @@
   display: block;
 }
 
-/* Footer */
-.footer {
-  background: #222;
-  color: #aaa;
-  text-align: center;
-  /* margin-top: 2rem;  <-- Remove this */
-}
+
 
 /* Buttons */
 .btn {
@@ -253,13 +247,7 @@
   margin: 0.5rem 0;
 }
 
-.footer {
-  text-align: center;
-  padding: 1rem;
-  background: #222;
-  color: white;
-  margin-top: 2rem;
-}
+
 
 
 
